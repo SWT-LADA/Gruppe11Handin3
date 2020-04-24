@@ -59,6 +59,9 @@
   <ItemGroup>
     <Compile Include="IT1_ButtonDoor.cs" />
     <Compile Include="IT2_UI.cs" />
+    <Compile Include="IT3_Timer.cs" />
+    <Compile Include="IT4_A_Light.cs" />
+    <Compile Include="IT4_B_Display.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

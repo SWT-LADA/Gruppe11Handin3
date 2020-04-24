@@ -285,6 +285,7 @@ namespace Microwave.Test.Unit
             door.Opened += Raise.EventWith(this, EventArgs.Empty);
 
             cooker.Received(1).Stop();
+            display.Received(1).Clear(); //Denne har vi tilføjet******
         }
 
         [Test]

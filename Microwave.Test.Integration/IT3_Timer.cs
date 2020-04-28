@@ -54,11 +54,11 @@ namespace Microwave.Test.Integration
             _display.Received().ShowTime(0,55);
         }
 
-        [Test]
-        public void OnTimerExpired()
-        {
-            Thread.Sleep(65000); //tråden sættes til at sove i 65 sek
-            _powerTube.Received().TurnOff();
-        }
+        //[Test]
+        //public void OnTimerExpired()
+        //{
+        //    Thread.Sleep(65000); //tråden sættes til at sove i 65 sek
+        //    _powerTube.Received().TurnOff();
+        //}
     }
 }

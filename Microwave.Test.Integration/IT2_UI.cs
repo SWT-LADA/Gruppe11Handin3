@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using MicrowaveOvenClasses.Boundary;
 using MicrowaveOvenClasses.Controllers;
@@ -51,13 +52,13 @@ namespace Microwave.Test.Integration
             _powerTube.Received().TurnOn(50);
         }
 
-        //[Test]
-        //public void CookControllerCookingIsDone()
-        //{
-        //   // _timer.Expired += Raise.EventWith(new System.Timers.); //her mangler vi at raise et event 
-        //    _display.Received().Clear();
-        //    _light.Received().TurnOff();
-        //}
+        [Test]
+        public void CookControllerCookingIsDone()
+        {
+            Thread.Sleep(65000);
+            _display.Received().Clear();
+            _light.Received().TurnOff();
+        }
 
         [Test]
         public void UIStopDoorOpened()

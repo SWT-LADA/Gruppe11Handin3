@@ -43,7 +43,8 @@ namespace MicrowaveOvenClasses.Boundary
         {
             // One tick has passed
             // Do what I should
-            TimeRemaining -= 1000;
+            //TimeRemaining -= 1000; Denne linje har vi fjernet
+            TimeRemaining -= 1; //Denne linje har vi tilføjet
             TimerTick?.Invoke(this, EventArgs.Empty);
 
             if (TimeRemaining <= 0)

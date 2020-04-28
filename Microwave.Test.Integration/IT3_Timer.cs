@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using MicrowaveOvenClasses.Boundary;
 using MicrowaveOvenClasses.Controllers;
@@ -9,6 +10,7 @@ using MicrowaveOvenClasses.Interfaces;
 using NSubstitute;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
+using Timer = MicrowaveOvenClasses.Boundary.Timer;
 
 namespace Microwave.Test.Integration
 {
@@ -43,6 +45,20 @@ namespace Microwave.Test.Integration
             _powerButton.Press();
             _timeButton.Press();
             _startCancelButton.Press();
+        }
+
+        [Test]
+        public void loop()
+        {
+            Thread.Sleep(5000);
+            _display.Received().ShowTime(0,55);
+        }
+
+        [Test]
+        public void OnTimerExpired()
+        {
+            Thread.Sleep(65000); //tråden sættes til at sove i 65 sek
+            _powerTube.Received().TurnOff();
         }
     }
 }

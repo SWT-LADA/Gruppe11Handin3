@@ -39,7 +39,9 @@ namespace Microwave.Test.Integration
             _powerTube = Substitute.For<IPowerTube>();
             _cookController = new CookController(_timer, _display, _powerTube);
             _userInterface = new UserInterface(_powerButton, _timeButton, _startCancelButton, _door, _display, _light, _cookController);
-            
+
+            _cookController.UI = _userInterface;
+
             _powerButton.Press();
             _timeButton.Press();
             _startCancelButton.Press();
@@ -55,7 +57,7 @@ namespace Microwave.Test.Integration
         [Test]
         public void CookControllerCookingIsDone()
         {
-            Thread.Sleep(65000);
+            _timer.Expired += Raise.EventWith(this, EventArgs.Empty);
             _display.Received().Clear();
             _light.Received().TurnOff();
         }

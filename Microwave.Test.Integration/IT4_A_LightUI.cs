@@ -71,15 +71,15 @@ namespace Microwave.Test.Integration
             _output.Received().OutputLine("Light is turned on");
         }
 
-        //[Test]
-        //public void TurnOffWhenCookingIsDone()
-        //{
-        //    _powerButton.Press();
-        //    _timeButton.Press();
-        //    _startCancelButton.Press();
-        //    Thread.Sleep(65000);
-        //    _output.Received().OutputLine("Light is turned off");
-        //}
+        [Test]
+        public void TurnOffWhenCookingIsDone()
+        {
+            _powerButton.Press();
+            _timeButton.Press();
+            _startCancelButton.Press();
+            Thread.Sleep(65000);
+            _output.Received().OutputLine("Light is turned off");
+        }
 
         [Test]
         public void StartCancelledPressedWhenCooking()

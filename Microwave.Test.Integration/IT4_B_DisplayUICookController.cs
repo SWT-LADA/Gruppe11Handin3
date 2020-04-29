@@ -71,15 +71,15 @@ namespace Microwave.Test.Integration
             _output.Received().OutputLine("Display shows: 00:55");
         }
 
-        //[Test]
-        //public void ClearWhenCookingIsDone()
-        //{
-        //    _powerButton.Press();
-        //    _timeButton.Press();
-        //    _startCancelButton.Press();
-        //    Thread.Sleep(65000);
-        //    _output.Received().OutputLine("Display cleared");
-        //}
+        [Test]
+        public void ClearWhenCookingIsDone()
+        {
+            _powerButton.Press();
+            _timeButton.Press();
+            _startCancelButton.Press();
+            Thread.Sleep(65000);
+            _output.Received().OutputLine("Display cleared");
+        }
 
         [Test]
         public void DoorOpenedWhenCooking() // Her fandt vi en fejl og rettede den i UI-klassen

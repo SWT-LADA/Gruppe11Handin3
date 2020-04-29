@@ -60,8 +60,8 @@
     <Compile Include="IT1_ButtonDoorUI.cs" />
     <Compile Include="IT2_UICookController.cs" />
     <Compile Include="IT3_TimerCookController.cs" />
-    <Compile Include="IT4_A_Light.cs" />
-    <Compile Include="IT4_B_Display.cs" />
+    <Compile Include="IT4_A_LightUI.cs" />
+    <Compile Include="IT4_B_DisplayUICookController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

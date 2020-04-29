@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using MicrowaveOvenClasses.Boundary;
 using MicrowaveOvenClasses.Controllers;
@@ -9,11 +10,12 @@ using MicrowaveOvenClasses.Interfaces;
 using NSubstitute;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
+using Timer = MicrowaveOvenClasses.Boundary.Timer;
 
 namespace Microwave.Test.Integration
 {
     [TestFixture()]
-    class IT4_A_Light
+    class IT4_A_LightUI
     {
         private Button _powerButton;
         private Button _timeButton;
@@ -42,6 +44,8 @@ namespace Microwave.Test.Integration
             _powerTube = Substitute.For<IPowerTube>();
             _cookController = new CookController(_timer, _display, _powerTube);
             _userInterface = new UserInterface(_powerButton, _timeButton, _startCancelButton, _door, _display, _light, _cookController);
+
+            _cookController.UI = _userInterface;
         }
 
         [Test]
@@ -67,7 +71,15 @@ namespace Microwave.Test.Integration
             _output.Received().OutputLine("Light is turned on");
         }
 
-        //Nederste linje s. 6 får vi ikke dækket, da vi er i tvivl om hvordan denne nåes/eventet raises
+        [Test]
+        public void TurnOffWhenCookingIsDone()
+        {
+            _powerButton.Press();
+            _timeButton.Press();
+            _startCancelButton.Press();
+            Thread.Sleep(60500);
+            _output.Received().OutputLine("Light is turned off");
+        }
 
         [Test]
         public void StartCancelledPressedWhenCooking()

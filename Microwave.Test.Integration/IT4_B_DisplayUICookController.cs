@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using MicrowaveOvenClasses.Boundary;
 using MicrowaveOvenClasses.Controllers;
@@ -9,11 +10,12 @@ using MicrowaveOvenClasses.Interfaces;
 using NSubstitute;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
+using Timer = MicrowaveOvenClasses.Boundary.Timer;
 
 namespace Microwave.Test.Integration
 {
     [TestFixture]
-    class IT4_B_Display
+    class IT4_B_DisplayUICookController
     {
         private Button _powerButton;
         private Button _timeButton;
@@ -41,6 +43,8 @@ namespace Microwave.Test.Integration
             _powerTube = Substitute.For<IPowerTube>();
             _cookController = new CookController(_timer, _display, _powerTube);
             _userInterface = new UserInterface(_powerButton, _timeButton, _startCancelButton, _door, _display, _light, _cookController);
+
+            _cookController.UI = _userInterface;
         }
         [Test]
         public void ShowPower()
@@ -50,19 +54,35 @@ namespace Microwave.Test.Integration
         }
 
         [Test]
-        public void ShowTime()
+        public void ShowTimeWhenSettingTime()
         {
             _powerButton.Press();
             _timeButton.Press();
             _output.Received().OutputLine("Display shows: 01:00");
         }
 
-        //Her mangler en test for det loop, der skal raise et event
-
-        //Mangler også en test for kaldet nederst på side 6, da den er svær at nå
+        [Test]
+        public void ShowTimeWhenCooking()
+        {
+            _powerButton.Press();
+            _timeButton.Press();
+            _startCancelButton.Press();
+            Thread.Sleep(5000);
+            _output.Received().OutputLine("Display shows: 00:55");
+        }
 
         [Test]
-        public void DoorOpenedWhenCooking() //her fandt vi en fejl og rettede den i UI-klassen
+        public void ClearWhenCookingIsDone()
+        {
+            _powerButton.Press();
+            _timeButton.Press();
+            _startCancelButton.Press();
+            Thread.Sleep(65000);
+            _output.Received().OutputLine("Display cleared");
+        }
+
+        [Test]
+        public void DoorOpenedWhenCooking() // Her fandt vi en fejl og rettede den i UI-klassen
         {
             _powerButton.Press();
             _timeButton.Press();

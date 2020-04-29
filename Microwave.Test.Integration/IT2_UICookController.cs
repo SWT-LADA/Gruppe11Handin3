@@ -51,7 +51,6 @@ namespace Microwave.Test.Integration
         public void UIStartCooking()
         {
             _timer.Received().Start(60);
-            //_powerTube.Received().TurnOn(50); Vi kan fjerne disse kald nr. 2 for dette bliver testet i unittest
         }
 
         [Test]
@@ -59,7 +58,6 @@ namespace Microwave.Test.Integration
         {
             _timer.Expired += Raise.EventWith(this, EventArgs.Empty);
             _display.Received().Clear();
-            //_light.Received().TurnOff();
         }
 
         [Test]
@@ -67,7 +65,6 @@ namespace Microwave.Test.Integration
         {
             _door.Open();
             _timer.Received().Stop();
-            //_powerTube.Received().TurnOff();
         }
 
         [Test]
@@ -75,7 +72,6 @@ namespace Microwave.Test.Integration
         {
             _startCancelButton.Press();
             _timer.Received().Stop();
-            //_powerTube.Received().TurnOff();
         }
     }
 }

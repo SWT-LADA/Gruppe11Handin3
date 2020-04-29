@@ -50,15 +50,15 @@ namespace Microwave.Test.Integration
         [Test]
         public void OnTimerTick()
         {
-            Thread.Sleep(5100);
+            Thread.Sleep(5200);
             _display.Received().ShowTime(0,55);
         }
 
-        [Test]
-        public void OnTimerExpired()
-        {
-            Thread.Sleep(65000);
-            _powerTube.Received().TurnOff();
-        }
+        //[Test]
+        //public void OnTimerExpired()
+        //{
+        //    Thread.Sleep(65000);
+        //    _powerTube.Received().TurnOff();
+        //}
     }
 }

@@ -50,7 +50,7 @@ namespace Microwave.Test.Integration
         [Test]
         public void OnTimerTick()
         {
-            Thread.Sleep(5050);
+            Thread.Sleep(5150);
             _display.Received().ShowTime(0,55);
         }
 

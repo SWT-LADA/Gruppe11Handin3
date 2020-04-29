@@ -9,11 +9,13 @@ using MicrowaveOvenClasses.Controllers;
 using MicrowaveOvenClasses.Interfaces;
 using NSubstitute;
 using NUnit.Framework;
+using NUnit.Framework.Internal;
+using Timer = MicrowaveOvenClasses.Boundary.Timer;
 
 namespace Microwave.Test.Integration
 {
     [TestFixture]
-    class IT2_UI
+    class IT3_TimerCookController
     {
         private Button _powerButton;
         private Button _timeButton;
@@ -21,7 +23,7 @@ namespace Microwave.Test.Integration
         private Door _door;
         private UserInterface _userInterface;
         private CookController _cookController;
-        private ITimer _timer;
+        private Timer _timer;
         private ILight _light;
         private IDisplay _display;
         private IPowerTube _powerTube;
@@ -33,14 +35,12 @@ namespace Microwave.Test.Integration
             _timeButton = new Button();
             _startCancelButton = new Button();
             _door = new Door();
-            _timer = Substitute.For<ITimer>();
+            _timer = new Timer();
             _light = Substitute.For<ILight>();
             _display = Substitute.For<IDisplay>();
             _powerTube = Substitute.For<IPowerTube>();
             _cookController = new CookController(_timer, _display, _powerTube);
             _userInterface = new UserInterface(_powerButton, _timeButton, _startCancelButton, _door, _display, _light, _cookController);
-
-            _cookController.UI = _userInterface;
 
             _powerButton.Press();
             _timeButton.Press();
@@ -48,33 +48,16 @@ namespace Microwave.Test.Integration
         }
 
         [Test]
-        public void UIStartCooking()
+        public void OnTimerTick()
         {
-            _timer.Received().Start(60);
-            _powerTube.Received().TurnOn(50);
+            Thread.Sleep(5000);
+            _display.Received().ShowTime(0,55);
         }
 
         [Test]
-        public void CookControllerCookingIsDone()
+        public void OnTimerExpired()
         {
-            _timer.Expired += Raise.EventWith(this, EventArgs.Empty);
-            _display.Received().Clear();
-            _light.Received().TurnOff();
-        }
-
-        [Test]
-        public void UIStopDoorOpened()
-        {
-            _door.Open();
-            _timer.Received().Stop();
-            _powerTube.Received().TurnOff();
-        }
-
-        [Test]
-        public void UIStopStartCancelPressed()
-        {
-            _startCancelButton.Press();
-            _timer.Received().Stop();
+            Thread.Sleep(65000);
             _powerTube.Received().TurnOff();
         }
     }
